@@ -23,7 +23,7 @@
     
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <img src="assets/img/sh2.jpg" alt="viajes-chile" style="width: 50px;">
+        <img src="assets/img/sh2.jpg" alt="super-hero" style="width: 50px;">
         <a class="navbar-brand m-0" href="index.html">
             <p class="m-2">SuperHero</p>
         </a>
@@ -57,27 +57,40 @@
 
         <!-- Formulario -->
         <section class="container">
-            <div class="form-row">
-                <div class="form-group col-md-2"></div>
-                <div class="form-group col-md-8">
-                    <div class="form-group">
-                        <div class="col">
-                            <label class="col-form-label">Ingresa el número del SuperHero a buscar</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-user"></i></span></div>
-                                <input type="text" class="form-control" placeholder="Ingrese el número" autocomplete="off">
+            <form id="hero">
+                <div class="form-row">
+                    <div class="form-group col-md-2"></div>
+                    <div class="form-group col-md-8">
+                        <div class="form-group">
+                            <div class="col">
+                                <label class="col-form-label">Ingresa el número del SuperHero a buscar</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-user"></i></span></div>
+                                    <input type="text" class="form-control" id="superHero" placeholder="Ingrese el número" autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col">
+                                <button type="submit" class="btn btn-primary">Buscar</button>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="col">
-                            <button type="button" class="btn btn-primary">Buscar</button>
-                        </div>
-                    </div>
+                    <div class="form-group col-md-2"></div>
                 </div>
-                <div class="form-group col-md-2"></div>
+            </form>
+        </section>
+
+        <!-- Super Hero -->
+        <section>
+            <div class="form-row">
+                <div class="form-group col-md-6" id="contenedorHero">
+                </div>
+                <div class="form-group col-md-6" id="estadisticasHero">
+                </div>
             </div>
         </section>
+
     </main>
 
     <!-- Footer -->
