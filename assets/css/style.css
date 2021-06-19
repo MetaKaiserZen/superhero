@@ -1,0 +1,19 @@
+html
+{
+    scroll-behavior: smooth;
+}
+
+.canvasjs-chart-canvas
+{
+    width: 95% !important;
+    max-height: 350px !important;
+    margin-left: 15px;
+}
+
+.invalid-label
+{
+    font-size: 12px;
+    font-weight: bold;
+    color: #DC143C;
+    display: inline-block !important;
+}
