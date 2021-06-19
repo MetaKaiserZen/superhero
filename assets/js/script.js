@@ -1,6 +1,6 @@
 $(document).ready(function()
 {
-    // No Permite Letras
+    // // No Permite Letras
 
     $('#superHero').on('keypress', function(e)
     {
@@ -12,7 +12,7 @@ $(document).ready(function()
         }
     });
 
-    // No Permite Tres o Más Números
+    // No Permite Más de Tres Cifras
 
     $('#superHero').on('input', function()
     {
@@ -47,16 +47,19 @@ $(document).ready(function()
             e.chart.render();
         }
 
-        $.ajax(
+        if (regex.test(superHero))
         {
-            url: 'https://superheroapi.com/api.php/10226716420436711/' + superHero,
-            method: 'GET',
-            dataType: 'json',
-            success: function(data)
+            if (superHero >= 1 && superHero <= 732)
             {
-                if (regex.test(superHero))
+                $('#validacionHero').removeClass('invalid-label');
+                $('#validacionHero').text('');
+
+                $.ajax(
                 {
-                    if (superHero >= 1 && superHero <= 732)
+                    url: 'https://superheroapi.com/api.php/10226716420436711/' + superHero,
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function(data)
                     {
                         // Se Declaran las Variables
 
@@ -120,9 +123,9 @@ $(document).ready(function()
 
                         estadisticasArray = Object.values(data.powerstats);
 
-                        for (i = 0; i < 7; i++)
+                        for (i = 0; i < 6; i++)
                         {
-                            if (data.powerstats[i] == null)
+                            if (estadisticasArray[i] == 'null')
                             {
                                 estadisticasArray[i] = 10;
                             }
@@ -130,30 +133,40 @@ $(document).ready(function()
 
                         // Bootstrap Card
 
-                        $('#contenedorHero').html(`
-                            <div class="col text-center">
-                                <div class="card"">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <img src=" ${imagen} " alt="super-hero" style="width: 100%; height: 100%;">
-                                        </div>
-                                        <div class="col-md-8">
-                                            <div class="card-body">
-                                                <h5 class="card-title text-left">Nombre: ${nombre} </h5>
-                                                <p class="card-text text-justify" style="font-size: 11px;">Conexiones: ${conexiones} </p>
-                                                <p class="card-text text-left" style="font-size: 12px; font-style: italic;">Publicado por: ${publicado} </p>
-                                                <hr>
-                                                <p class="card-text text-left" style="font-size: 12px; font-style: italic;">Ocupación: ${ocupacion} </p>
-                                                <hr>
-                                                <p class="card-text text-left" style="font-size: 12px; font-style: italic;">Primera Aparición: ${aparicion} </p>
-                                                <hr>
-                                                <p class="card-text text-left" style="font-size: 12px; font-style: italic;">Altura: ${altura} </p>
-                                                <hr>
-                                                <p class="card-text text-left" style="font-size: 12px; font-style: italic;">Peso: ${peso} </p>
-                                                <hr>
-                                                <p class="card-text text-left" style="font-size: 12px; font-style: italic;">Alianzas: ${alianzasArray} </p>
+                        $('#columnasHero').html(`
+                            <div class="form-group col-md-6 align-self-center">
+                                <div class="col text-center">
+                                    <div class="card">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <img src=" ${imagen} " alt="super-hero" style="width: 100%; height: 100%;">
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="card-body">
+                                                    <h5 class="card-title text-left">Nombre: ${nombre} </h5>
+                                                    <p class="card-text text-justify" style="font-size: 11px;">Conexiones: ${conexiones} </p>
+                                                    <p class="card-text text-left" style="font-size: 12px; font-style: italic;">Publicado por: ${publicado} </p>
+                                                    <hr>
+                                                    <p class="card-text text-left" style="font-size: 12px; font-style: italic;">Ocupación: ${ocupacion} </p>
+                                                    <hr>
+                                                    <p class="card-text text-left" style="font-size: 12px; font-style: italic;">Primera Aparición: ${aparicion} </p>
+                                                    <hr>
+                                                    <p class="card-text text-left" style="font-size: 12px; font-style: italic;">Altura: ${altura} </p>
+                                                    <hr>
+                                                    <p class="card-text text-left" style="font-size: 12px; font-style: italic;">Peso: ${peso} </p>
+                                                    <hr>
+                                                    <p class="card-text text-left" style="font-size: 12px; font-style: italic;">Alianzas: ${alianzasArray} </p>
+                                                </div>
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="col text-center">
+                                    <div class="card" style="height: 450px;">
+                                        <div class="card-header font-weight-bold text-white bg-dark">ESTADÍSTICAS DE PODER</div>
+                                        <div class="card-body" id="estadisticasHero"></div>
                                     </div>
                                 </div>
                             </div>`
@@ -174,6 +187,7 @@ $(document).ready(function()
                                 cursor: 'pointer',
                                 itemclick: explodePie
                             },
+                            horizontalAlign: 'right',
                             data:
                             [
                                 {
@@ -197,33 +211,31 @@ $(document).ready(function()
                         let chart = new CanvasJS.Chart('estadisticasHero', config);
 
                         chart.render();
-                    }
-                    else
+                    },
+                    error: function()
                     {
-                        // Si la Búsqueda Está Fuera de Rango
-
-                        $('#mensajeAdvertencia').html('¡Número fuera de rango!');
-
+                        // Para Dar con Esta Advertencia Modificar la URL
+        
+                        $('#mensajeAdvertencia').html('¡Hubo un error crítico en la búsqueda!');
+        
                         $('#warningModal').modal('show');
                     }
-                }
-                else
-                {
-                    // Si Ingresa Números
-
-                    $('#mensajeAdvertencia').html('¡Sólo ingrese números!');
-
-                    $('#warningModal').modal('show');
-                }
-            },
-            error: function()
-            {
-                // Para Dar con Esta Advertencia Modificar la URL
-
-                $('#mensajeAdvertencia').html('¡Hubo un error crítico en la búsqueda!');
-
-                $('#warningModal').modal('show');
+                });
             }
-        });
+            else
+            {
+                // Si la Búsqueda Está Fuera de Rango
+
+                $('#validacionHero').addClass('invalid-label');
+                $('#validacionHero').text('¡Número fuera de rango!');
+            }
+        }
+        else
+        {
+            // Si no Ingresa Números
+
+            $('#validacionHero').addClass('invalid-label');
+            $('#validacionHero').text('¡Sólo ingrese números!');
+        }
     });
 });

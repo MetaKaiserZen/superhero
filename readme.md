@@ -29,3 +29,7 @@
 * **V5.0**
 
 * *Se realizan validaciones en JavaScript*
+
+* **V6.0**
+
+* *Se agregan detalles en el CSS*
